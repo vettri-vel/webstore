@@ -36,6 +36,15 @@ public class InMemoryProductRepository implements ProductRepository {
 		List<Product> result = jdbcTemplate.query("SELECT * FROM products", params, new ProductMapper());
 		return result;
 	}
+	
+	@Override
+	public void updateStock(String productId, long noOfUnits) {
+		String sql = "UPDATE PRODUCTS SET UNITS_IN_STOCK = :unitInStock WHERE ID= :id";
+		Map<String,Object> params = new HashMap<>();
+		params.put("unitInStock", noOfUnits);
+		params.put("id", productId);
+		jdbcTemplate.update(sql, params);
+	}
 
 	private static final class ProductMapper implements RowMapper<Product> {
 		public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -53,5 +62,4 @@ public class InMemoryProductRepository implements ProductRepository {
 			return product;
 		}
 	}
-
 }
