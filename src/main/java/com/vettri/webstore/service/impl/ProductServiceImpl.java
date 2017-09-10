@@ -22,8 +22,9 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	/* 
-	 * 
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.service.ProductService#updateAllStock()
 	 */
 	@Override
 	public void updateAllStock() {
@@ -36,5 +37,18 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.service.ProductService#getProductsByCategory()
+	 */
+	@Override
+	public List<Product> getProductsByCategory(String category) {
+		return productRepository.getProductsByCategory(category);
+	}
+	
+	@Override
+	public List<Product> getAllProducts() {
+		return productRepository.getAllProducts();
+	}
 }

@@ -28,7 +28,8 @@ public class InMemoryProductRepository implements ProductRepository {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	/*
-	 * 
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.domain.repository.ProductRepository#getAllProducts()
 	 */
 	@Override
 	public List<Product> getAllProducts() {
@@ -37,6 +38,10 @@ public class InMemoryProductRepository implements ProductRepository {
 		return result;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.domain.repository.ProductRepository#updateStock(java.lang.String, long)
+	 */
 	@Override
 	public void updateStock(String productId, long noOfUnits) {
 		String sql = "UPDATE PRODUCTS SET UNITS_IN_STOCK = :unitInStock WHERE ID= :id";
@@ -44,6 +49,20 @@ public class InMemoryProductRepository implements ProductRepository {
 		params.put("unitInStock", noOfUnits);
 		params.put("id", productId);
 		jdbcTemplate.update(sql, params);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.domain.repository.ProductRepository#getProductsByCategory(java.lang.String)
+	 */
+	@Override
+	public List<Product> getProductsByCategory(String category) {
+		String SQL = "SELECT * FROM PRODUCTS WHERE CATEGORY =      :category"; 
+        Map<String, Object> params = new HashMap<String, Object>(); 
+        params.put("category", category); 
+ 
+        return jdbcTemplate.query(SQL, params, new 
+        ProductMapper()); 
 	}
 
 	private static final class ProductMapper implements RowMapper<Product> {

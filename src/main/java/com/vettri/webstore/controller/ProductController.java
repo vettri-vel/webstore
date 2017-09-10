@@ -6,9 +6,9 @@ package com.vettri.webstore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.vettri.webstore.domain.repository.ProductRepository;
 import com.vettri.webstore.service.ProductService;
 
 /**
@@ -19,14 +19,11 @@ import com.vettri.webstore.service.ProductService;
 public class ProductController {
 
 	@Autowired
-	private ProductRepository productRepository;
-
-	@Autowired
 	private ProductService productService;
 
-	@RequestMapping("/products")
+	@RequestMapping("products")
 	public String list(Model model) {
-		model.addAttribute("products", productRepository.getAllProducts());
+		model.addAttribute("products", productService.getAllProducts());
 		return "products";
 	}
 
@@ -35,4 +32,12 @@ public class ProductController {
 		productService.updateAllStock();
 		return "redirect:/products";
 	}
+	
+	@RequestMapping("products/{category}")
+	public String getProductsByCategory(Model model,
+			@PathVariable("category") String productCategory){
+		model.addAttribute("products", productService.getProductsByCategory(productCategory));
+		return "products";
+	}
+	
 }
