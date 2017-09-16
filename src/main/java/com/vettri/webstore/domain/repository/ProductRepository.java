@@ -4,6 +4,7 @@
 package com.vettri.webstore.domain.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import com.vettri.webstore.domain.Product;
 
@@ -35,4 +36,20 @@ public interface ProductRepository {
 	 * @return List of Product
 	 */
 	List<Product> getProductsByCategory(String category);
+	
+	/**
+	 * method used to retrieve the products based on filters
+	 * 
+	 * @param filterParams
+	 * @return
+	 */
+	List<Product> getProductsByFilter(Map<String, List<String>> filterParams);
+	
+	/**
+	 * Method used to retrieve the product by id
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	Product getProductById(String productId);
 }

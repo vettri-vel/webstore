@@ -3,11 +3,19 @@
  */
 package com.vettri.webstore.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.InternalResourceView;
 
 import com.vettri.webstore.service.ProductService;
 
@@ -21,7 +29,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@RequestMapping("products")
+	@RequestMapping("/products")
 	public String list(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
 		return "products";
@@ -32,12 +40,29 @@ public class ProductController {
 		productService.updateAllStock();
 		return "redirect:/products";
 	}
-	
-	@RequestMapping("products/{category}")
-	public String getProductsByCategory(Model model,
-			@PathVariable("category") String productCategory){
-		model.addAttribute("products", productService.getProductsByCategory(productCategory));
-		return "products";
+
+	@RequestMapping("/products/{category}")
+	public ModelAndView getProductsByCategory(@PathVariable("category") String productCategory) {
+		View view = new InternalResourceView("/WEB-INF/views/products.jsp");
+		ModelAndView modelView = new ModelAndView();
+		modelView.setView(view);
+		modelView.getModel().put("products", productService.getProductsByCategory(productCategory));
+		return modelView;
+	}
+
+	@RequestMapping("/products/filter/{params}")
+	public ModelAndView getProductsByFilter(@MatrixVariable(pathVar="params")
+			Map<String, List<String>> filterParams){
+		View view = new InternalResourceView("/WEB-INF/views/products.jsp");
+		ModelAndView modelView = new ModelAndView();
+		modelView.setView(view);
+		modelView.getModel().put("products", productService.getProductsByFilter(filterParams));
+		return modelView;
 	}
 	
+	@RequestMapping("/product")
+	public String getProductById(@RequestParam("id") String productId, Model model){
+		model.addAttribute("product", productService.getProductById(productId));
+		return "product";
+	}
 }

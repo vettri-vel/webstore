@@ -4,6 +4,7 @@
 package com.vettri.webstore.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,8 +48,30 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.getProductsByCategory(category);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.service.ProductService#getAllProducts()
+	 */
 	@Override
 	public List<Product> getAllProducts() {
 		return productRepository.getAllProducts();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.service.ProductService#getProductsByFilter(java.util.Map)
+	 */
+	@Override
+	public List<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+		return productRepository.getProductsByFilter(filterParams);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.service.ProductService#getProductById(java.lang.String)
+	 */
+	@Override
+	public Product getProductById(String productId) {
+		return productRepository.getProductById(productId);
 	}
 }

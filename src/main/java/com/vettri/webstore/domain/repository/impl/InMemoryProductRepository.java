@@ -64,6 +64,24 @@ public class InMemoryProductRepository implements ProductRepository {
         return jdbcTemplate.query(SQL, params, new 
         ProductMapper()); 
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.domain.repository.ProductRepository#getProductsByFilter(java.util.Map)
+	 */
+	@Override
+	public List<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+		String sql = "SELECT * FROM PRODUCTS WHERE CATEGORY IN (:categories ) AND MANUFACTURER IN ( :brands)";
+		return jdbcTemplate.query(sql, filterParams, new ProductMapper());
+	}
+	
+	@Override 
+	public Product getProductById(String productID) {
+		String SQL = "SELECT * FROM PRODUCTS WHERE ID = :id";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", productID);
+		return jdbcTemplate.queryForObject(SQL, params, new ProductMapper());
+	}
 
 	private static final class ProductMapper implements RowMapper<Product> {
 		public Product mapRow(ResultSet rs, int rowNum) throws SQLException {

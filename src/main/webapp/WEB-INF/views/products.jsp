@@ -39,7 +39,8 @@
 						<p>$${product.unitPrice}</p>
 						      
 						<p>Available ${product.unitsInStock} units in stock</p>
-						      
+						
+						<a href="/webstore/product?id=${product.productId}">View Details</a>     
 					</div>
 					      
 				</div>

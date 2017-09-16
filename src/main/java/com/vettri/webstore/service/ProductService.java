@@ -4,6 +4,7 @@
 package com.vettri.webstore.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.vettri.webstore.domain.Product;
 
@@ -31,4 +32,19 @@ public interface ProductService {
 	 * @return List of Product
 	 */
 	List<Product> getProductsByCategory(String category);
+	
+	/**
+	 * Method used to retrieve products based on filters
+	 * 
+	 * @param filterParams
+	 * @return
+	 */
+	List<Product> getProductsByFilter(Map<String ,List<String>> filterParams);
+	
+	/**
+	 * Method used to retrieve product by id
+	 * @param productId
+	 * @return
+	 */
+	Product getProductById(String productId);
 }
