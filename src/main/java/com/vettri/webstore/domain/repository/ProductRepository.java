@@ -52,4 +52,10 @@ public interface ProductRepository {
 	 * @return
 	 */
 	Product getProductById(String productId);
+	
+	/**
+	 * 
+	 * @param product
+	 */
+	void addProduct(Product product);
 }

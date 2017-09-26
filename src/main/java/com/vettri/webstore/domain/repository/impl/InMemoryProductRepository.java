@@ -75,12 +75,49 @@ public class InMemoryProductRepository implements ProductRepository {
 		return jdbcTemplate.query(sql, filterParams, new ProductMapper());
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.domain.repository.ProductRepository#getProductById(java.lang.String)
+	 */
 	@Override 
 	public Product getProductById(String productID) {
 		String SQL = "SELECT * FROM PRODUCTS WHERE ID = :id";
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", productID);
 		return jdbcTemplate.queryForObject(SQL, params, new ProductMapper());
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see com.vettri.webstore.domain.repository.ProductRepository#addProduct(com.vettri.webstore.domain.Product)
+	 */
+	@Override
+	public void addProduct(Product product) {
+		String SQL = "INSERT INTO PRODUCTS (ID, " 
+				+ "NAME," 
+				+ "DESCRIPTION," 
+				+ "UNIT_PRICE," 
+                + "MANUFACTURER," 
+                + "CATEGORY," 
+                + "CONDITION," 
+                + "UNITS_IN_STOCK," 
+                + "UNITS_IN_ORDER," 
+                + "DISCONTINUED) " 
+                + "VALUES (:id, :name, :desc, :price,:manufacturer, :category, :condition, :inStock,                    :inOrder, :discontinued)";   
+     
+          Map<String, Object> params = new HashMap<>(); 
+          params.put("id", product.getProductId());   
+          params.put("name", product.getName());   
+          params.put("desc", product.getDescription());   
+          params.put("price", product.getUnitPrice());   
+          params.put("manufacturer", product.getManufacturer());   
+          params.put("category", product.getCategory());   
+          params.put("condition", product.getCondition());   
+          params.put("inStock", product.getUnitsInStock());   
+          params.put("inOrder", product.getUnitsInOrder());   
+          params.put("discontinued", product.isDiscontinued());   
+
+          jdbcTemplate.update(SQL, params);    
+		
 	}
 
 	private static final class ProductMapper implements RowMapper<Product> {
