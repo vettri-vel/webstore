@@ -10,7 +10,9 @@
 </head>
 
 <body>
+	
 	<section>
+	<a href="<c:url value="/logout" />">Logout</a> 
 	<div class="jumbotron">
 		    
 		<div class="container">
@@ -147,6 +149,16 @@
 					<spring:message code="label.addProduct.radiobutton.refurbished"/>          
 				</div>
 				    
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-lg-2" for="productImage"> <spring:message
+						code="label.addProduct.form.productImage" />
+				</label>
+				<div class="col-lg-10">
+					<form:input id="productImage" path="productImage" type="file"
+						class="form:input-large" />
+				</div>
 			</div>
 
 			<div class="form-group">

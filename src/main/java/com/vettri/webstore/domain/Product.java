@@ -6,6 +6,8 @@ package com.vettri.webstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @author vettrivel
  *
@@ -27,6 +29,7 @@ public class Product implements Serializable {
 	private long unitsInOrder;
 	private boolean discontinued;
 	private String condition;
+	private MultipartFile productImage;
 
 	/**
 	 * 
@@ -214,6 +217,20 @@ public class Product implements Serializable {
 	 */
 	public void setCondition(String condition) {
 		this.condition = condition;
+	}
+
+	/**
+	 * @return the productImage
+	 */
+	public MultipartFile getProductImage() {
+		return productImage;
+	}
+
+	/**
+	 * @param productImage the productImage to set
+	 */
+	public void setProductImage(MultipartFile productImage) {
+		this.productImage = productImage;
 	}
 
 }
